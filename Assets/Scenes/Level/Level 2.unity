@@ -453,7 +453,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   next_scene_index: 1
   pause_panel: {fileID: 1548834618}
-  level_music: {fileID: 8300000, guid: 186db81e6b90059499460140aac28805, type: 3}
+  level_music: {fileID: 8300000, guid: 8803208ca5352b34ba5a781b1bdcbb3e, type: 3}
 --- !u!4 &161068914
 Transform:
   m_ObjectHideFlags: 0

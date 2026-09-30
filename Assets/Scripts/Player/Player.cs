@@ -8,9 +8,12 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     [SerializeField] private int score;
+    [SerializeField] private int life;
+    [SerializeField] private int maxLife;
     private PlayerController _player_control;
     private PlayerAnim _player_anim;
     public UnityEvent<int> OnScoreChanged;
+    public UnityEvent<int,int> OnLifeChanged;
 
     public bool grounded {get{return _player_control.grounded;}}
 
@@ -24,12 +27,12 @@ public class Player : MonoBehaviour
 
     public void Kill()
     {
+
         // Joue l'animation de mort
         _player_control.SetFreeze(true);
         _player_anim.SetDeathAnim(true);
-
+        RemoveLife();
         StartCoroutine(Respawn());
-
     }
 
     public void AddCoin()
@@ -37,7 +40,15 @@ public class Player : MonoBehaviour
         score += 100;
         OnScoreChanged?.Invoke(score);
     }
-
+    public void RemoveLife()
+    {
+        life--;
+        OnLifeChanged?.Invoke(life,maxLife);
+        if (life <= 0)
+        {
+            GameManager.instance.ReloadScene();
+        }
+    }
     public void Bounce()
     {
         _player_control.ForceJump();

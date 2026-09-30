@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class AnimationFunction : MonoBehaviour
 {
-    [SerializeField] private AudioSource step_aiudiosource;
+    [SerializeField] private AudioSource step_audiosource;
 
     public void PlayStep()
     {
-        if (!step_aiudiosource) return;
+        if (!step_audiosource) return;
 
-        step_aiudiosource.Play();
+        step_audiosource.Play();
     }
 }
