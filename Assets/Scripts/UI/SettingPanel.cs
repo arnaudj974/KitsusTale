@@ -51,7 +51,4 @@ public class SettingPanel : MonoBehaviour
         sfx_value_text.text = Math.Floor(value * 100).ToString();
         GameManager.instance.sound_manager.SetSfx(value);
     }
-
-
-
 }

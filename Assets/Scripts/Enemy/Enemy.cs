@@ -9,11 +9,13 @@ public class Enemy : MonoBehaviour
     {
         Forward,
         AvoidDrop,
-        Patrol
+        Patrol,
+        Jump
     }
 
     [SerializeField] private MoveType moveType;
     [SerializeField] private float speed = 10;
+    [SerializeField] private float jumpSpeed = 15;
     [SerializeField] private float gravity = -18f;
     [SerializeField] private bool facing_left;
     [SerializeField] private bool is_flying;
@@ -43,6 +45,11 @@ public class Enemy : MonoBehaviour
             // Si le movetype est patrol et qu'il y a moins de 2 positions, envoie un warning et passe le movetype en avoid drop pour éviter les erreurs
             Debug.LogWarning("Not engouth patrol point to be in patrol point switching to Avoid Drop",this);
             moveType = MoveType.AvoidDrop;
+        }
+        //Change le flipX en cas de !facingleft
+        if(!facing_left)
+        {
+            sprite.flipX = true;
         }
     }
 
@@ -104,6 +111,11 @@ public class Enemy : MonoBehaviour
             }
         }
 
+        if (moveType == MoveType.Jump && GroundCheck())//faire sauter l'ennemi si le movetype est jump et qu'il touche le sol
+        {
+            move_dir.y = jumpSpeed;
+        }
+
         // Applique la vélocité au rigidbody 
         body.linearVelocity = move_dir;
 
@@ -160,7 +172,7 @@ public class Enemy : MonoBehaviour
         Vector2 dir = facing_left? Vector2.left : Vector2.right;
 
         // Fait un raycast devant l'ennemi en fonction de sa direction
-        RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + (Vector2.up * 0.2f), dir,1,groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + (Vector2.up * 0.2f) + (dir * 0.2f), dir,1,groundLayer);
 
         if (hit)
         {
