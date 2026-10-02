@@ -181,7 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   moveType: 3
   speed: 4
-  jumpSpeed: 15
+  jumpSpeed: 10
   gravity: -18
   facing_left: 1
   is_flying: 0
