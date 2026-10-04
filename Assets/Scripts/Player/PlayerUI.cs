@@ -17,6 +17,7 @@ public class PlayerUI : MonoBehaviour
 
     public void UpdateHearts(int _life,int _maxLife)
     {
+        _maxLife = listHeart.Count >= _maxLife ? _maxLife : listHeart.Count; //vérifie que le nombre de coeurs est supérieur ou égal au nombre de vies max, sinon on prend le nombre de coeurs disponibles
         for (int i = 0; i < _maxLife; i++)
         {
             listHeart[i].sprite = i < _life ? spHeartFull : spHeartEmpty;

@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
 
     public bool grounded {get{return _player_control.grounded;}}
 
+    private bool is_respawning = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,7 +29,8 @@ public class Player : MonoBehaviour
 
     public void Kill()
     {
-
+        if (is_respawning) return; //éviter de prendre plusieurs points de dégats en même temps 
+        is_respawning = true;
         // Joue l'animation de mort
         _player_control.SetFreeze(true);
         _player_anim.SetDeathAnim(true);
@@ -83,6 +86,7 @@ public class Player : MonoBehaviour
 
         // Réactive le contrôle
         _player_control.SetFreeze(false);
+        is_respawning = false;
     }
 
     public void Teleport(Vector2 position)

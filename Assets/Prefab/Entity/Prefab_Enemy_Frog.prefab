@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1831044262073775733}
   - component: {fileID: 3429405229638306602}
   - component: {fileID: 2856418609323199496}
-  - component: {fileID: 7079544077320321414}
   m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
@@ -116,21 +115,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &7079544077320321414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4687922043638852975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f87a1f0b02597b438c2333fdd6d2dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  spJump: {fileID: -7645190019268416926, guid: 289087162596d844586834b6ca6bf045, type: 3}
-  spFall: {fileID: 1067594448, guid: 289087162596d844586834b6ca6bf045, type: 3}
-  spIdle: {fileID: -8510697443743385242, guid: 289087162596d844586834b6ca6bf045, type: 3}
 --- !u!1 &5023475786491363951
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,6 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7001846042404667888}
   - component: {fileID: 2558380235149399073}
+  - component: {fileID: 6955818296146335020}
   - component: {fileID: 6992971752671892946}
   - component: {fileID: 1222807343639450158}
   - component: {fileID: 7198268094251424986}
@@ -194,6 +179,22 @@ MonoBehaviour:
   kill_fX: {fileID: 2488384656899237757, guid: 0902f13a2966fba47a33bcba39ec9e2f, type: 3}
   patrol_pos: []
   distance_before_point_change: 0.2
+--- !u!114 &6955818296146335020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5023475786491363951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f87a1f0b02597b438c2333fdd6d2dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  spJump: {fileID: -7645190019268416926, guid: 289087162596d844586834b6ca6bf045, type: 3}
+  spFall: {fileID: 1067594448, guid: 289087162596d844586834b6ca6bf045, type: 3}
+  spIdle: {fileID: -8510697443743385242, guid: 289087162596d844586834b6ca6bf045, type: 3}
+  sp: {fileID: 3429405229638306602}
 --- !u!50 &6992971752671892946
 Rigidbody2D:
   serializedVersion: 5
