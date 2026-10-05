@@ -2,12 +2,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
     PlayerInput playerInput;
     Rigidbody2D body2D;
-    
+
     [SerializeField] private float speed = 10f;
     [SerializeField] private float gravity = -18f;
     [SerializeField] private float ground_check_dist = 0.15f;
@@ -17,7 +18,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float coyote_time_duration = 0.5f;
     [SerializeField] private float jump_buffer_time_duration = 1.2f;
     [SerializeField] private LayerMask groundLayer;
-    
+
     private bool is_freeze = false;
     private float gravity_multiplier = 1f;
     private Vector2 move_input;
@@ -26,9 +27,11 @@ public class PlayerController : MonoBehaviour
     private bool jump_released;
     private bool jump_hold;
     private bool is_grounded;
-
-    public bool grounded {get {return is_grounded;}}
-    public Vector2 MoveDir {get {return move_dir;}}
+    private int nbJump = 0;
+    private bool is_dashing;
+    private Coroutine dashCoroutine;
+    public bool grounded { get { return is_grounded; } }
+    public Vector2 MoveDir { get { return move_dir; } }
 
     // Timers
     private float coyote_time_timer;
@@ -45,7 +48,7 @@ public class PlayerController : MonoBehaviour
         // Si le script n'est pas sur le joueur, envoie une erreur et désactive le script
         if (playerInput == null)
         {
-            Debug.LogError("Missing an Player Input Component",this);
+            Debug.LogError("Missing an Player Input Component", this);
             enabled = false;
         }
 
@@ -69,7 +72,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (is_freeze) return;
-
+        if(is_dashing) return;
         // Récupère la vélocité actuelle
         move_dir = body2D.linearVelocity;
 
@@ -80,15 +83,16 @@ public class PlayerController : MonoBehaviour
 
         // Vérifie si le joueur touche le sol
         is_grounded = Ground_check();
+        nbJump = is_grounded ? 0 : nbJump; // Si le joueur touche le sol, réinitialise le double jump
 
         // Si le joueur tombe et que le multiplicateur de gravité est différent de la chute, change le multiplicateur de gravité
         if (move_dir.y < 0 && gravity_multiplier != fall_gravity_multiplier)
         {
             gravity_multiplier = fall_gravity_multiplier;
         }
-        
+
         // Applique la gravité
-        if(is_grounded)
+        if (is_grounded)
         {
             // Si le joueur est au sol, met la vélocité verticale à la gravité
             // (s'assure que le joueur est bloqué au sol et ne flotte pas légèrement au-dessus du sol)
@@ -124,7 +128,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Vérifie s'il existe un collider au pied du joueur
-        Collider2D walkColider = Physics2D.OverlapCircle(transform.position,ground_check_dist,groundLayer);
+        Collider2D walkColider = Physics2D.OverlapCircle(transform.position, ground_check_dist, groundLayer);
 
         if (walkColider != null)
         {
@@ -143,7 +147,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             // Le joueur ne touche pas le sol
-            if(is_grounded)
+            if (is_grounded)
             {
 
                 // S'il touchait le sol à la frame précédente, le joueur vient de quitter le sol
@@ -157,25 +161,26 @@ public class PlayerController : MonoBehaviour
 
     void HanddleJumpInput()
     {
-        
+
         if (jump_press)
         {
             // Le bouton de jump vient d'être appuyé
 
-            if (is_grounded || coyote_time_timer > 0)
+            if (nbJump < 2 || is_grounded || coyote_time_timer > 0)
             {
                 // Si le joueur touche le sol ou le coyote time timer est actif, saute.
+                nbJump++;
                 Jump();
             }
         }
-        
+
         if (jump_buffer_timer <= 0)
         {
             // Si le jump buffer timer atteint 0, ne considère plus que le bouton de saut a été appuyé.
             jump_press = false;
         }
 
-        if (jump_released && move_dir.y > 0 )
+        if (jump_released && move_dir.y > 0)
         {
             // Si le bouton de saut est relâché et que le joueur monte, met le multiplicateur de gravité à celui de chute
             gravity_multiplier = fall_gravity_multiplier;
@@ -185,8 +190,6 @@ public class PlayerController : MonoBehaviour
         jump_released = false;
     }
 
-    
-
     public void Jump()
     {
         // Ajoute la force du saut à la vélocité verticale
@@ -194,24 +197,21 @@ public class PlayerController : MonoBehaviour
 
         // Change le multiplicateur de gravité à celui de saut
         gravity_multiplier = jump_gravity_multiplier;
-        
+
         // Arrête les timers
         coyote_time_timer = -1;
         jump_buffer_timer = -1;
 
         // Appelle les fonctions de saut
         OnJump?.Invoke();
-        
     }
-
-    
 
     // Permet de forcer un saut même si le perso ne touche pas le sol.
     public void ForceJump()
     {
         // Change la vélocité du rigidbody
         body2D.linearVelocityY = jump_force;
-        
+
         // Change la vélocité du joueur (évite les problèmes si la fonction est appelée au milieu d'une frame)
         move_dir.y = jump_force;
 
@@ -226,7 +226,17 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    
+    public IEnumerator Dash()
+    {
+        body2D.linearVelocity = new Vector2(speed * 3, 0);
+        gravity = 0;
+        playerInput.currentActionMap?.Disable();
+        yield return new WaitForSeconds(0.2f);
+        playerInput.currentActionMap?.Enable();
+        is_dashing = false;
+        gravity = -18f;
+    }
+
     // Permet de stopper le player et les input
     public void SetFreeze(bool value)
     {
@@ -249,7 +259,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-#region Inputs
+    #region Inputs
     // Input de direction
     public void Move(InputAction.CallbackContext ctx)
     {
@@ -278,6 +288,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-#endregion
+    public void Dash(InputAction.CallbackContext ctx)
+    {
+        if(ctx.performed)
+        {
+            if(!is_dashing && MoveDir.x != 0)
+            {
+                is_dashing = true;
+                dashCoroutine = StartCoroutine(Dash());
+            }
+        }
+    }
+    #endregion
 
 }

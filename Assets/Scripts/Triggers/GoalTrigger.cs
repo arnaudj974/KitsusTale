@@ -10,6 +10,7 @@ public class GoalTrigger : MonoBehaviour
         {
             // Si l'objet qui entre en collision est sur le layer du joueur
             // Passe au level suivant
+            collision.GetComponent<Player>().SaveInfos(); //sauvegarde les infos du player avant de passer au niveau suivant
             Level.current_level.NextLevel();
         }
     }
