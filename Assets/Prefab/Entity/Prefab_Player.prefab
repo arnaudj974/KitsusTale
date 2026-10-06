@@ -139,10 +139,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2818296514334881254}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 60.57075, y: -58.749176}
+  m_SizeDelta: {x: 121.1415, y: 117.49835}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4855246408528632651
 CanvasRenderer:
@@ -477,6 +477,7 @@ Transform:
   - {fileID: 6014386840807501685}
   - {fileID: 5347340922815720073}
   - {fileID: 6720651203196185757}
+  - {fileID: 5212758820354255495}
   - {fileID: 2947254349661517897}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -524,6 +525,21 @@ MonoBehaviour:
       - m_Target: {fileID: 5415890336967132812}
         m_TargetAssemblyTypeName: PlayerAnim, Assembly-CSharp
         m_MethodName: LandFX
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDash:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5415890336967132812}
+        m_TargetAssemblyTypeName: PlayerAnim, Assembly-CSharp
+        m_MethodName: DashFx
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -686,6 +702,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 56627ab8-4ff7-4d75-9605-a5e33567917e
     m_ActionName: 'Player/Pause[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8134963780319981598}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: Dash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c65b2144-9eb5-4855-af8f-056faf17ad54
+    m_ActionName: 'Player/Dash[/Keyboard/shift]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -816,9 +848,11 @@ MonoBehaviour:
   sprite_renderer: {fileID: 8229895140061088996}
   landParticles: {fileID: 6999479516419734235, guid: 529f68303a3755e4a937488793f1291b, type: 3}
   jump_particles: {fileID: 5479422573378441078, guid: 6b9334834f6ac3e46aa180332891677e, type: 3}
+  dash_particles: {fileID: 2394711954596379941, guid: 9c340bf616695714bb411d6e1f7c0698, type: 3}
   jump_audio_source: {fileID: 2032927734776933431}
   step_audio_source: {fileID: 420662702187523439}
   death_audio_source: {fileID: 1004101272172231431}
+  dash_audio_source: {fileID: 2009740211352394140}
 --- !u!1 &4605562749820261852
 GameObject:
   m_ObjectHideFlags: 0
@@ -851,10 +885,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2818296514334881254}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 423.99524, y: -58.749176}
+  m_SizeDelta: {x: 121.1415, y: 117.49835}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6715815724407328926
 CanvasRenderer:
@@ -1492,7 +1526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d47b649bb57e943b7f7ac822cec8a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  step_audiosource: {fileID: 0}
+  step_audiosource: {fileID: 420662702187523439}
 --- !u!1 &7788583320752223710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1525,10 +1559,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2818296514334881254}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 545.1368, y: -58.749176}
+  m_SizeDelta: {x: 121.1415, y: 117.49835}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &726546338133277586
 CanvasRenderer:
@@ -1568,6 +1602,135 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &7928019767940870985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5212758820354255495}
+  - component: {fileID: 2009740211352394140}
+  m_Layer: 0
+  m_Name: Dash Audio Source
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5212758820354255495
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7928019767940870985}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4792311292169977411}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &2009740211352394140
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7928019767940870985}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 3828663834702867977, guid: 20596a52579f5a0489c28f43eab40828, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 6418180475301049370, guid: 78ce96600a6650c4ab4fd0513d035a63, type: 2}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &8581583734145421907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1600,10 +1763,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2818296514334881254}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 181.71225, y: -58.749176}
+  m_SizeDelta: {x: 121.1415, y: 117.49835}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7756989893078833816
 CanvasRenderer:
@@ -1675,10 +1838,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2818296514334881254}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 302.85376, y: -58.749176}
+  m_SizeDelta: {x: 121.1415, y: 117.49835}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5420872847724205727
 CanvasRenderer:

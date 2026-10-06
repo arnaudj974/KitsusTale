@@ -29,7 +29,8 @@ public class PlayerController : MonoBehaviour
     private bool is_grounded;
     private int nbJump = 0;
     private bool is_dashing;
-    private Coroutine dashCoroutine;
+    private bool can_dash = true;
+    public bool dashing { get { return is_dashing; } }
     public bool grounded { get { return is_grounded; } }
     public Vector2 MoveDir { get { return move_dir; } }
 
@@ -39,6 +40,7 @@ public class PlayerController : MonoBehaviour
 
     public UnityEvent OnJump;
     public UnityEvent OnLand;
+    public UnityEvent OnDash;
 
     void Awake()
     {
@@ -58,7 +60,6 @@ public class PlayerController : MonoBehaviour
 
         // Récupère le rigidbody 2D
         body2D = GetComponent<Rigidbody2D>();
-
     }
 
     void Start()
@@ -72,7 +73,7 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (is_freeze) return;
-        if(is_dashing) return;
+        if (is_dashing) return;
         // Récupère la vélocité actuelle
         move_dir = body2D.linearVelocity;
 
@@ -207,13 +208,13 @@ public class PlayerController : MonoBehaviour
     }
 
     // Permet de forcer un saut même si le perso ne touche pas le sol.
-    public void ForceJump()
+    public void ForceJump(float boost)
     {
         // Change la vélocité du rigidbody
-        body2D.linearVelocityY = jump_force;
+        body2D.linearVelocityY = jump_force*boost;
 
         // Change la vélocité du joueur (évite les problèmes si la fonction est appelée au milieu d'une frame)
-        move_dir.y = jump_force;
+        move_dir.y = jump_force*boost;
 
         if (jump_hold)
         {
@@ -226,15 +227,21 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public IEnumerator Dash()
+    public IEnumerator HandleDash()
     {
-        body2D.linearVelocity = new Vector2(speed * 3, 0);
+        is_dashing = true;
+        can_dash = false;
+        body2D.linearVelocity = new Vector2(speed * 3 * (move_dir.x > 0 ? 1 : -1), 0);
         gravity = 0;
         playerInput.currentActionMap?.Disable();
+        OnDash?.Invoke();
         yield return new WaitForSeconds(0.2f);
         playerInput.currentActionMap?.Enable();
         is_dashing = false;
         gravity = -18f;
+        yield return new WaitForSeconds(1f);
+        can_dash = true;
+
     }
 
     // Permet de stopper le player et les input
@@ -246,7 +253,7 @@ public class PlayerController : MonoBehaviour
         {
             // Stoppe le player et sa physique
             body2D.bodyType = RigidbodyType2D.Static;
-            body2D.linearVelocity = Vector2.zero;
+            //body2D.linearVelocity = Vector2.zero;
             // Stop input
             playerInput.enabled = false;
         }
@@ -292,10 +299,9 @@ public class PlayerController : MonoBehaviour
     {
         if(ctx.performed)
         {
-            if(!is_dashing && MoveDir.x != 0)
+            if(can_dash && MoveDir.x != 0)
             {
-                is_dashing = true;
-                dashCoroutine = StartCoroutine(Dash());
+                StartCoroutine(HandleDash());
             }
         }
     }

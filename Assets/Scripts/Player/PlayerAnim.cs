@@ -11,11 +11,13 @@ public class PlayerAnim : MonoBehaviour
     [Header("Fx")]
     [SerializeField] private GameObject landParticles;
     [SerializeField] private GameObject jump_particles;
-    
+    [SerializeField] private GameObject dash_particles;
+
     [Header("Sound")]
     [SerializeField] private AudioSource jump_audio_source;
     [SerializeField] private AudioSource step_audio_source;
     [SerializeField] private AudioSource death_audio_source;
+    [SerializeField] private AudioSource dash_audio_source;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -80,6 +82,21 @@ public class PlayerAnim : MonoBehaviour
         if(step_audio_source) step_audio_source.Play();
     }
 
+    public void DashFx()
+    {
+        // spawn particles
+        if (dash_particles)
+        {
+            Instantiate(dash_particles, transform.position, Quaternion.identity);
+        }
+
+        // Squash and stretch
+        sprite_renderer.transform.localScale = new Vector3(1.2f, 0.8f, 1);
+        sprite_renderer.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.InOutElastic);
+
+        // Audio
+        if (dash_audio_source) dash_audio_source.Play();
+    }
     public void SetDeathAnim(bool value)
     {
         animator.SetBool("IsDead",value);

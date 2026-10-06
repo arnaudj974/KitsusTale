@@ -191,16 +191,15 @@ public class Enemy : MonoBehaviour
             // Récupère le script du joueur
             Player player = collision.GetComponent<Player>();
             // Vérifie s'il est au sol
-            if (!player.grounded)
+            if (!player.grounded || player.dashing)// S'il est dans les airs ou en train de dasher, il a écrasé l'ennemi
             {
-                // S'il est dans les airs, il a écrasé l'ennemi
                 // Tue l'ennemi
                 Kill();
                 // Ajoute une pièce et du score au player
                 player.AddCoin();
                 // Fait rebondir le joueur
-                player.Bounce();
-            }  
+                player.Bounce(1f);
+            }
             else
             {
                 // Le joueur n'était pas en saut, tue le joueur

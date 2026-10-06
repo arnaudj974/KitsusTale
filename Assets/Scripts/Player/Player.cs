@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     private PlayerAnim _player_anim;
     public UnityEvent<int> OnScoreChanged;
     public UnityEvent<int, int> OnLifeChanged;
-
+    public bool dashing { get { return _player_control.dashing; } }
     public bool grounded { get { return _player_control.grounded; } }
 
     private bool is_respawning = false;
@@ -60,9 +60,9 @@ public class Player : MonoBehaviour
             GameManager.instance.ReloadScene();
         }
     }
-    public void Bounce()
+    public void Bounce(float boost)
     {
-        _player_control.ForceJump();
+        _player_control.ForceJump(boost);
     }
 
     public void OnPauseInput(InputAction.CallbackContext ctx)
@@ -72,7 +72,6 @@ public class Player : MonoBehaviour
             Level.current_level.PauseLevel();
         }
     }
-
 
     public IEnumerator Respawn()
     {
