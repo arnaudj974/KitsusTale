@@ -66,7 +66,7 @@ public class Enemy : MonoBehaviour
         // Récupère la vélocité précédente
         move_dir = body.linearVelocity;
 
-        if( moveType == MoveType.Patrol) // Logique de mouvement pour le déplacement en patrouille
+        if(moveType == MoveType.Patrol) // Logique de mouvement pour le déplacement en patrouille
         {
             // Vérifie la distance à la target actuelle
             CheckDistanceToTarget();
@@ -237,6 +237,5 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-
 
 }

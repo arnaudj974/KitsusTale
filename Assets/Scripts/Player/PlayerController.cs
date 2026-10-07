@@ -84,7 +84,6 @@ public class PlayerController : MonoBehaviour
 
         // Vérifie si le joueur touche le sol
         is_grounded = Ground_check();
-        nbJump = is_grounded ? 0 : nbJump; // Si le joueur touche le sol, réinitialise le double jump
 
         // Si le joueur tombe et que le multiplicateur de gravité est différent de la chute, change le multiplicateur de gravité
         if (move_dir.y < 0 && gravity_multiplier != fall_gravity_multiplier)
@@ -143,6 +142,7 @@ public class PlayerController : MonoBehaviour
 
             // Met le multiplicateur de gravité à celui de chute
             gravity_multiplier = fall_gravity_multiplier;
+            nbJump = 0;
             return true;
         }
         else

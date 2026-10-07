@@ -19,7 +19,6 @@ public class Stalactite : MonoBehaviour
         }
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        anim.enabled = false;
     }
 
 
@@ -36,13 +35,17 @@ public class Stalactite : MonoBehaviour
             collision.GetComponent<Player>()?.Kill(); //inflige des dégats au joueur
             Destroy(gameObject); // détruit la stalactite
         }
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void CheckDistancePlayer()
     {
         if (distance < 10f)
         {
-            if (anim.enabled == false) { anim.enabled = true; }
+            anim.SetBool("IsClose", true);
             if (distance < 5f)
             {
                 rb.bodyType = RigidbodyType2D.Dynamic;

@@ -27,12 +27,12 @@ AudioRandomContainer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: AudioContainer_Dash
-  m_Volume: 0
+  m_Volume: -14
   m_Pitch: -97
   m_AutomaticTriggerTime: 0
   m_LoopCount: 1
   m_VolumeRandomizationRange: {x: 0, y: 0}
-  m_PitchRandomizationRange: {x: -561.7023, y: 51.063797}
+  m_PitchRandomizationRange: {x: -153.19159, y: 51.063797}
   m_AutomaticTriggerTimeRandomizationRange: {x: 0, y: 0}
   m_LoopCountRandomizationRange: {x: 0, y: 0}
   m_Elements:
