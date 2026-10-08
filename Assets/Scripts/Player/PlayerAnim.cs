@@ -84,22 +84,31 @@ public class PlayerAnim : MonoBehaviour
 
     public void DashFx()
     {
-        // spawn particles
-        if (dash_particles)
-        {
-            Instantiate(dash_particles, transform.position, Quaternion.identity);
-        }
-
+        float t = 0f;
+        float maxT = 0.2f;
         // Squash and stretch
         sprite_renderer.transform.localScale = new Vector3(1.2f, 0.8f, 1);
         sprite_renderer.transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.InOutElastic);
 
         // Audio
         if (dash_audio_source) dash_audio_source.Play();
+        if (dash_particles)
+        {
+            while(t<=maxT)
+            {
+                var part = Instantiate(dash_particles, transform.position + (Vector3.up/2), Quaternion.identity, transform);
+                t += Time.deltaTime;
+            }
+        }
     }
     public void SetDeathAnim(bool value)
     {
         animator.SetBool("IsDead",value);
         if (death_audio_source && value) death_audio_source.Play();
+    }
+
+    public void Victory()
+    {
+        animator.SetBool("Victory", true);
     }
 }

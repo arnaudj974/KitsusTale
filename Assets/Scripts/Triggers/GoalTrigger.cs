@@ -9,9 +9,10 @@ public class GoalTrigger : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer(player_layer))
         {
             // Si l'objet qui entre en collision est sur le layer du joueur
-            // Passe au level suivant
+
+            collision.GetComponent<PlayerAnim>()?.Victory();
             collision.GetComponent<Player>().SaveInfos(); //sauvegarde les infos du player avant de passer au niveau suivant
-            Level.current_level.NextLevel();
+            Level.current_level.NextLevel();  // Passe au level suivant
         }
     }
 }

@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     public UnityEvent<int, int> OnLifeChanged;
     public bool dashing { get { return _player_control.dashing; } }
     public bool grounded { get { return _player_control.grounded; } }
-
     private bool is_respawning = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

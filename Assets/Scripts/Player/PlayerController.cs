@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     public UnityEvent OnJump;
     public UnityEvent OnLand;
     public UnityEvent OnDash;
+    public UnityEvent EndDash;
 
     void Awake()
     {
@@ -229,13 +230,15 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator HandleDash()
     {
+        float dir = move_input.x > 0 ? 1 : -1;
         is_dashing = true;
         can_dash = false;
-        body2D.linearVelocity = new Vector2(speed * 3 * (move_dir.x > 0 ? 1 : -1), 0);
+        body2D.linearVelocity = new Vector2(speed * 3 * dir, 0);
         gravity = 0;
         playerInput.currentActionMap?.Disable();
         OnDash?.Invoke();
         yield return new WaitForSeconds(0.2f);
+        EndDash?.Invoke();
         playerInput.currentActionMap?.Enable();
         is_dashing = false;
         gravity = -18f;
