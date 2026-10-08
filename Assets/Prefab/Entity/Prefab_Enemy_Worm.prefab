@@ -163,10 +163,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Worm
   patrol_pos: []
-  speed: 3
-  distanceAttack: 2
+  speed: 10
+  distanceAttack: 1
   kill_fX: {fileID: 2488384656899237757, guid: 0902f13a2966fba47a33bcba39ec9e2f, type: 3}
-  ground_fX: {fileID: 6999479516419734235, guid: 21c53e8a7d5195845a91e366ddb6744e, type: 3}
+  ground_fX: {fileID: 49528268414915486, guid: 1d10c1521668244419cc459513b281e0, type: 3}
 --- !u!70 &6724523377311086642
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

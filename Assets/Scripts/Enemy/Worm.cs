@@ -4,10 +4,10 @@ using UnityEngine;
 public class Worm : MonoBehaviour
 {
     [SerializeField] private Vector2[] patrol_pos;
-    [SerializeField] private float speed = 10;
+    [SerializeField] private float speed = 5;
     [SerializeField] private float distanceAttack = 2f;
     [SerializeField] private GameObject kill_fX;
-    [SerializeField] private GameObject ground_fX;
+    [SerializeField] private ParticleSystem ground_fX;
     private Animator anim;
     private SpriteRenderer sp;
     private CapsuleCollider2D collider;
@@ -18,6 +18,13 @@ public class Worm : MonoBehaviour
     private Player player;
     private float distancePlayer;
     private bool isAttacking = false;
+    private ParticleSystem groundFx;
+
+    private void Awake()
+    {
+        groundFx = Instantiate(ground_fX, transform.position + Vector3.up * 0.5f, Quaternion.identity, transform);
+    }
+
     void Start()
     {
         // Trouve le player du niveau
@@ -32,9 +39,15 @@ public class Worm : MonoBehaviour
 
     void Update()
     {
+        var emission = groundFx.emission;
         if (isAttacking)
         {
+            emission.enabled = false;
             return; 
+        }
+        else
+        {
+            emission.enabled = true;
         }
         // Vérifie la distance à la target actuelle
         CheckDistanceToTarget();
@@ -44,13 +57,14 @@ public class Worm : MonoBehaviour
 
         // Applique la vitesse à la direction
         move_dir = dir.normalized * speed;
-        transform.position += (Vector3)move_dir * Time.fixedDeltaTime;
+        transform.position += (Vector3)move_dir * Time.deltaTime;
 
         distancePlayer = Vector2.Distance(transform.position, player.transform.position);
-        if (ground_fX)
-        {
-            Instantiate(ground_fX, transform.position + Vector3.up * 0.5f, Quaternion.identity);
-        }
+        /* if (ground_fX)
+         {
+             Instantiate(ground_fX, transform.position + Vector3.up * 0.5f, Quaternion.identity);
+         }*/
+
         if (distancePlayer < Random.Range(distanceAttack - 0.5f, distanceAttack + 0.5f)) 
         {
             StartCoroutine(Attack());
