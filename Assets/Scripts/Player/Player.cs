@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int maxLife;
     private PlayerController _player_control;
     private PlayerAnim _player_anim;
+    public UnityEvent OnLifeGained;
     public UnityEvent<int> OnScoreChanged;
     public UnityEvent<int, int> OnLifeChanged;
     public bool dashing { get { return _player_control.dashing; } }
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour
         score += 100;
         if (score >= 10000)
         {
+            OnLifeGained?.Invoke();
             score -= 10000;
             RemoveLife(-1); // Ajoute une vie si le score atteint 10000
         }

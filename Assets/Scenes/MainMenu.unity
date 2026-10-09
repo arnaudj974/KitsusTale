@@ -12855,6 +12855,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SettingPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 7701204674674500638, guid: 0b3ce2d2cedada543bc6c157ae21d51c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8383635923093147279, guid: 0b3ce2d2cedada543bc6c157ae21d51c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -12939,6 +12943,10 @@ PrefabInstance:
     - target: {fileID: 3772529412748100953, guid: 6741100c1ef3765458d9807c305b5517, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8433100404208920059, guid: 6741100c1ef3765458d9807c305b5517, type: 3}
+      propertyPath: transition_duration
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

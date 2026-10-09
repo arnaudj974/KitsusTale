@@ -18,6 +18,7 @@ public class PlayerAnim : MonoBehaviour
     [SerializeField] private AudioSource step_audio_source;
     [SerializeField] private AudioSource death_audio_source;
     [SerializeField] private AudioSource dash_audio_source;
+    [SerializeField] private AudioSource life_gain_audio_source;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -107,6 +108,10 @@ public class PlayerAnim : MonoBehaviour
         if (death_audio_source && value) death_audio_source.Play();
     }
 
+    public void PlayMusicLifeGain()
+    {
+        if (life_gain_audio_source) life_gain_audio_source.Play();
+    }
     public void Victory()
     {
         animator.SetBool("Victory", true);

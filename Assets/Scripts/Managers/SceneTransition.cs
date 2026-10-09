@@ -8,14 +8,13 @@ public class SceneTransition : MonoBehaviour
 {
     public bool is_showing = false;
     public CanvasGroup canvas_group;
-    public float transition_duration = 0.5f;
+    public float transition_duration = 1f;
 
 
     void Awake()
     {
         // Cache par défaut l'écran de transition en mettant son alpha à 0
         canvas_group.alpha = 0;
-        
     }
 
     public void Show()
